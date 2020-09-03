@@ -9,17 +9,19 @@
     "start": "concurrently \"yarn watch\" \"browser-sync start --index 'public/index.html' --server  --files dist/**/*.* \""
   },
   "dependencies": {
-    "protvista-base": "git+ssh://git@gitlab.lrz.de:prdb/prot-vista/feature-viewer.git#test-prototype",
     "lodash-es": "^4.17.11",
-    "protvista-track": "^2.6.1",
+    "protvista-base": "git+ssh://git@gitlab.lrz.de:prdb/prot-vista/feature-viewer.git#test-prototype",
+    "protvista-filter": "^2.7.0",
     "protvista-interpro-adapter": "^2.9.1",
     "protvista-interpro-track": "^2.6.1",
+    "protvista-manager": "^2.16.3",
+    "protvista-navigation": "^2.16.0",
     "protvista-proteomics-adapter": "^2.3.3",
     "protvista-sequence": "^2.7.0",
     "protvista-structure": "^2.9.1",
     "protvista-structure-adapter": "^2.3.3",
     "protvista-tooltip": "^2.9.2",
-    "protvista-filter": "^2.7.0",
+    "protvista-track": "^2.6.1",
     "protvista-variation": "^2.6.1",
     "protvista-variation-adapter": "^2.3.3",
     "protvista-variation-graph": "^2.9.3"
