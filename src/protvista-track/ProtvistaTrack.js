@@ -2,6 +2,11 @@ import ProtvistaTrack from "protvista-track";
 import _includes from "lodash-es/includes";
 import FeatureShape from "./FeatureShape";
 
+/* 
+Overwrites the default protvista-track component by swapping the 
+default FeatureShape object with our modified version. 
+This allows us to use custom svg shapes.
+*/
 class ProtvistaShapeTrack extends ProtvistaTrack {
   connectedCallback() {
     super.connectedCallback();
