@@ -1,5 +1,7 @@
-// Taken from  protvista-feature-adapter/src/BasicHelper.js
-// and adapted slightly
+/* 
+Taken from  protvista-feature-adapter/src/BasicHelper.js
+and adapted slightly
+*/
 
 export const formatSource = source => {
   return source.name.toLowerCase() === "PubMed".toLowerCase()
