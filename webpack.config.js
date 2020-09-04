@@ -10,8 +10,8 @@ const config = {
     path: path.resolve(PACKAGE_ROOT_PATH, "dist"),
     publicPath: "dist/",
     chunkFilename: "[name].js",
-    library: "ProtvistaUniprot",
-    filename: "protvista-uniprot.js"
+    library: "ProtvistaProteomicsdb",
+    filename: "protvista-proteomicsdb.js"
   },
   target: "web",
   devtool: "source-map",
