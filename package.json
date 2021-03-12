@@ -9,9 +9,14 @@
     "start": "concurrently \"yarn watch\" \"browser-sync start --index 'public/index.html' --server  --files dist/**/*.* \""
   },
   "dependencies": {
+    "data-loader": "^2.9.1",
+    "file-saver": "^2.0.2",
+    "lit-element": "^2.2.0",
+    "litemol": "^2.4.2",
     "lodash-es": "^4.17.11",
-    "protvista-base": "git+ssh://git@gitlab.lrz.de:prdb/prot-vista/feature-viewer.git#protvista-base",
     "protvista-filter": "^2.7.0",
+    "protvista-feature-adapter": "^2.3.3",
+    "protvista-datatable": "^2.8.2",
     "protvista-interpro-adapter": "^2.9.1",
     "protvista-interpro-track": "^2.6.1",
     "protvista-manager": "^2.16.3",
@@ -24,7 +29,10 @@
     "protvista-track": "^2.6.1",
     "protvista-variation": "^2.6.1",
     "protvista-variation-adapter": "^2.3.3",
-    "protvista-variation-graph": "^2.9.3"
+    "protvista-variation-graph": "^2.9.3",
+    "protvista-zoomable": "^2.6.1",
+    "timing-functions": "^1.0.0",
+    "url-join": "^4.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.3.3",
