@@ -69,6 +69,17 @@ class ProtvistaProteomicsdb extends Protvista {
       url: { type: String },
     };
   }
+
+  shouldUpdate(changedProperties) {
+    // Quick hack to force reload when config url changes
+    if (changedProperties.has("url")) {
+      this.getConfig().then(config => {
+        this.config = config;
+        this._loadData();
+      });
+    }
+    return super.shouldUpdate(changedProperties);
+  }
 }
 
 export default ProtvistaProteomicsdb;
