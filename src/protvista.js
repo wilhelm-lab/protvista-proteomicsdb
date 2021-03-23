@@ -14,6 +14,7 @@ class Protvista extends LitElement {
     super();
     this.adapters = adapters;
     this.openCategories = [];
+    this.expanded = false;
     this.notooltip = false;
     this.nostructure = false;
     this.hasData = false;
@@ -32,6 +33,7 @@ class Protvista extends LitElement {
       sequence: { type: String },
       data: { type: Object },
       openCategories: { type: Array },
+      expanded: { type: Boolean, reflect: true },
       config: { type: Object },
       notooltip: { type: Boolean, reflect: true },
       nostructure: { type: Boolean, reflect: true },
@@ -165,6 +167,10 @@ class Protvista extends LitElement {
           });
       }
     );
+    if (this.expanded) {
+      const openedCategories = this.openCategories.concat(this.config.categories.map(c => c.name));
+      this.openCategories = [...new Set(openedCategories)];
+    }
     return Promise.all(tasks);
   }
 
@@ -347,7 +353,7 @@ class Protvista extends LitElement {
             ? html`
               <div class="category" id="category_${category.name}">
                 <div
-                  class="category-label"
+                  class="category-label ${this.expanded ? "open" : ""}"
                   data-category-toggle="${category.name}"
                   @click="${this.handleCategoryClick}"
                 >
