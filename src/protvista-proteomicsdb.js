@@ -1,4 +1,4 @@
-import Protvista from "protvista-base/src/protvista";
+import Protvista from "./protvista";
 
 import ProtvistaNavigation from "protvista-navigation";
 import ProtvistaTooltip from "protvista-tooltip";
@@ -8,35 +8,26 @@ import ProtvistaVariation from "protvista-variation";
 import ProtvistaVariationGraph from "protvista-variation-graph";
 import ProtvistaFilter from "protvista-filter";
 import ProtvistaManager from "protvista-manager";
-import ProtvistaUniprotStructure from "protvista-base/src/protvista-uniprot-structure";
+import ProtvistaUniprotStructure from "./protvista-uniprot-structure";
 
 // Overwrite Protvista Track
 import ProtvistaTrack from "./protvista-track/ProtvistaTrack";
 
-import { transformData as _transformDataFeatureAdapter } from "protvista-feature-adapter";
-import { transformData as _transformDataProteomicsAdapter } from "protvista-proteomics-adapter";
-import { transformData as _transformDataStructureAdapter } from "protvista-structure-adapter";
-import { transformData as _transformDataVariationAdapter } from "protvista-variation-adapter";
-import { transformData as _transformDataInterproAdapter } from "protvista-interpro-adapter";
-import { transformData as _transformDataProteomicsdbAdapter } from "./ProtvistaProteomicsdbAdapter";
-import { transformData as _transformDataPredictProteinAdapter } from "./ProtvistaPredictProteinAdapter";
-import { transformData as _transformDataSnap2Adapter } from "./ProtvistaSnap2Adapter";
+import {transformData as _transformDataFeatureAdapter} from "protvista-feature-adapter";
+import {transformData as _transformDataProteomicsAdapter} from "protvista-proteomics-adapter";
+import {transformData as _transformDataStructureAdapter} from "protvista-structure-adapter";
+import {transformData as _transformDataVariationAdapter} from "protvista-variation-adapter";
+import {transformData as _transformDataProteomicsdbAdapter} from "./ProtvistaProteomicsdbAdapter";
+import {transformData as _transformDataPredictProteinAdapter} from "./ProtvistaPredictProteinAdapter";
+import {transformData as _transformDataSnap2Adapter} from "./ProtvistaSnap2Adapter";
 
 export const transformDataFeatureAdapter = _transformDataFeatureAdapter;
 export const transformDataProteomicsAdapter = _transformDataProteomicsAdapter;
 export const transformDataStructureAdapter = _transformDataStructureAdapter;
 export const transformDataVariationAdapter = _transformDataVariationAdapter;
-export const transformDataInterproAdapter = _transformDataInterproAdapter;
 export const transformDataProteomicsdbAdapter = _transformDataProteomicsdbAdapter;
 export const transformDataPredictProteinAdapter = _transformDataPredictProteinAdapter;
 export const transformDataSnap2Adapter = _transformDataSnap2Adapter;
-
-const PROTEOMICSDB_CONFIG_URL = "https://d23.proteomicsdb.in.tum.de/proteomicsdb/logic/featureViewer/getConfig.xsjs?accession={}";
-const STRING_REPLACEMENT_MODIFIER = "{}";
-
-async function getConfig(accession) {
-  return fetch(PROTEOMICSDB_CONFIG_URL.replace(STRING_REPLACEMENT_MODIFIER, accession)).then(res => res.json());
-}
 
 const adapters = {
   "protvista-proteomics-adapter": transformDataProteomicsAdapter,
@@ -59,14 +50,35 @@ const components = {
 };
 
 class ProtvistaProteomicsdb extends Protvista {
+
   constructor() {
     super(
       {
         adapters,
         components,
-        getConfig
+        getConfig: undefined
       }
     );
+    this.getConfig = async function getConfig() {
+      return fetch(this.url).then(res => res.json());
+    };
+  }
+
+  static get properties() {
+    return {
+      url: { type: String },
+    };
+  }
+
+  shouldUpdate(changedProperties) {
+    // Quick hack to force reload when config url changes
+    if (changedProperties.has("url")) {
+      this.getConfig().then(config => {
+        this.config = config;
+        this._loadData();
+      });
+    }
+    return super.shouldUpdate(changedProperties);
   }
 }
 
